@@ -2,7 +2,7 @@
   "name": "ga-proj3-personal",
   "version": "1.0.0",
   "description": "",
-  "main": "./server/server.js",
+  "main": "server.js",
   "scripts": {
     "server": "cd server && npm run start",
     "client": "cd client && npm run dev",

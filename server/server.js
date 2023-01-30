@@ -6,6 +6,7 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const authRoutes = require("./routes/auth.js");
 
 // Import
 const bookingsController = require("./controllers/bookingsController.js");
@@ -21,6 +22,7 @@ const PORT = process.env.PORT ?? 3000;
 app.use(express.static("../client/dist"))
 app.use(express.json());
 app.use(morgan("dev"));
+app.use("/auth", authRoutes);
 app.use("/api/bookings", bookingsController);
 app.use("/api/cohorts", cohortsController);
 app.use("/api/users", usersController);

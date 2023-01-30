@@ -1,0 +1,27 @@
+{
+  "name": "ga-proj3-personal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd server && npm run start",
+    "client": "cd client && npm run dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd client && npm run build"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulngch/ga-classroom-display.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paulngch/ga-classroom-display/issues"
+  },
+  "homepage": "https://github.com/paulngch/ga-classroom-display#readme"
+}

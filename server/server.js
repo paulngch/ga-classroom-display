@@ -1,16 +1,18 @@
+//DEPENDENCIES
 require("dotenv").config();
 const path = require("path");
 const express = require("express");
 
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 //Configuration
 const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 //MIDDLEWARE
-
+app.use(express.static("../client/dist"))
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -31,9 +33,9 @@ app.get("/api/", (req, res) => {
   res.json({ msg: "Hello World! It's the beginning of GA Classroom Display!" });
 });
 
-// app.get("*", (req, res) => {
-//   res.sendFile(path.resolve("..", "client", "dist", "index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve("..", "client", "dist", "index.html"));
+});
 
 //Listener
 db.once("open", () => {

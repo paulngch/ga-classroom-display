@@ -39,8 +39,8 @@ const calendarDisplayLogic = () => {
   const fetchCohort = async () => {
     try {
       const { data: response } = await axios.get(
-        `${import.meta.env.VITE_BASE_URL}/api/cohorts`
-        // `/api/cohorts`
+        // `${import.meta.env.VITE_BASE_URL}/api/cohorts`
+        `/api/cohorts`
       );
       if (response) {
         setCohortState(response);

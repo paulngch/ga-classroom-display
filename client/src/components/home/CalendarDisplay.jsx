@@ -1,11 +1,10 @@
 import { DateTime } from "luxon";
 import { useState, useEffect } from "react";
+import { useSelectedDate } from "../../context/SelectedDateContext";
 
 export default function CalendarDisplay() {
-  //Setting selected date to today
-  const [selectedDate, setSelectedDate] = useState(
-    DateTime.now().toFormat("yyyy-MM-dd")
-  );
+  const { selectedDate, setSelectedDate } = useSelectedDate();
+
   //Creating array of Weekdays to display **Days to display default "7", change code if necessary
   const dayHeaderRow = [];
   for (let i = 0; i < 7; i++) {
@@ -69,7 +68,7 @@ export default function CalendarDisplay() {
                       </th>
                     </tr>
 
-                    <tr className="divide-x divide-gray-200">
+                    <tr className="divide-x divide-gray-300">
                       <th
                         scope="col"
                         className="bg-gray-300 text-lg"
@@ -82,7 +81,7 @@ export default function CalendarDisplay() {
                         <th
                           scope="col"
                           key={ele}
-                          className="py-1.5 pl-4 pr-4 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                          className="bg-gray-200 py-1.5 pl-4 pr-4 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                         >
                           {ele}
                         </th>

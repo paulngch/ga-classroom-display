@@ -32,17 +32,17 @@ export default function Login() {
     onSubmit: async ({ email, password }) => {
       try {
         const { data: loginData } = await axios.post(
-        //   `${import.meta.env.VITE_BASE_URL}/auth/login`,
-            `/auth/login`,
+          `${import.meta.env.VITE_BASE_URL}/auth/login`,
+          // `/auth/login`,
           {
             email,
             password,
           }
         );
-        console.log(loginData);
+        // console.log(loginData);
         // Storing JWT in local storage
         localStorage.setItem("token", loginData.data.token);
-        console.log(loginData.data.token);
+        // console.log(loginData.data.token);
 
         if (loginData.data) {
           // Set global user state on successful login

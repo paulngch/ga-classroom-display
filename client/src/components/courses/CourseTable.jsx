@@ -59,18 +59,32 @@ export default function CourseTable() {
 
   //====================================================
   //CHANGE HANDLE DELETE & EDIT
-  const handleDelete = (id) => () => {
-    fetch(`/api/cohorts/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      // eslint-disable-next-line
-      .then((data) => {
+  const handleDelete = async (id) => {
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_BASE_URL}/api/cohorts/${id}`
+      );
+      if (response) {
         setCourses(courses.filter((h) => h._id !== id));
-      });
+        // setConfirmDelete({show:false,id:""})
+        // setShow(true);
+      }
+    } catch (error) {
+      console.log(error.message);
+      return setOpen(true); //open FailMsg
+    }
+
+    // fetch(`/api/cohorts/${id}`, {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   // eslint-disable-next-line
+    //   .then((data) => {
+        // setCourses(courses.filter((h) => h._id !== id));
+      // });
   };
   //======================================================
   // Sorting Filtered Courses
@@ -294,11 +308,11 @@ export default function CourseTable() {
                                 {/* <td>{course.weeks}</td> */}
                                 {user.data ? (
                                   <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                                    <Link to={`/editcourse/${course._id}`}>
+                                    <Link to={`/admin/course/${course._id}`}>
                                       📝
                                     </Link>
                                     <button
-                                      onClick={handleDelete(course._id, i)}
+                                      onClick={()=>handleDelete(course._id, i)}
                                     >
                                       X
                                     </button>
@@ -308,36 +322,7 @@ export default function CourseTable() {
                             </>
                           ))}
 
-                        {/* {people.map((person, personIdx) => (
-                          <tr
-                            key={person.email}
-                            className={
-                              personIdx % 2 === 0 ? undefined : "bg-gray-50"
-                            }
-                          >
-                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                              {person.name}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {person.title}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {person.email}
-                            </td>
-                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                              {person.role}
-                            </td>
-                            <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                              <a
-                                href="#"
-                                className="text-indigo-600 hover:text-indigo-900"
-                              >
-                                Edit
-                                <span className="sr-only">, {person.name}</span>
-                              </a>
-                            </td>
-                          </tr>
-                        ))} */}
+                      
                       </tbody>
                     </table>
                   </div>

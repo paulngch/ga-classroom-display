@@ -21,7 +21,7 @@ export default function App() {
           <Route element={<ProtectRoute />}>
             <Route path="/admin" element={<SharedLayout />}>
               <Route index element={<Home />} />
-              <Route path="/admin/course/id" element={<SingleCourse />} />
+              <Route path="/admin/course/:id" element={<SingleCourse />} />
             </Route>
           </Route>
         </Routes>

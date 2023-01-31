@@ -41,6 +41,7 @@ export default function CourseRegForm() {
       try {
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/cohorts`,
+        //   `/api/cohorts`,
           values
         );
         // navigate("/courses");

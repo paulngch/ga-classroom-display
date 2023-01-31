@@ -44,10 +44,10 @@ router.post("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   // Check for the presence of session data
-  if (!req.session.username) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
+  // if (!req.session.username) {
+  //   res.status(401).send("Unauthorized");
+  //   return;
+  // }
   const { id } = req.params;
   try {
     const deletedCohort = await Cohort.findByIdAndRemove(id);
@@ -69,10 +69,10 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   // Check for the presence of session data
-  if (!req.session.username) {
-    res.status(401).send("Unauthorized");
-    return;
-  }
+  // if (!user.data) {
+  //   res.status(401).send("Unauthorized");
+  //   return;
+  // }
   const { id } = req.params;
   try {
     const updatedCohort = await Cohort.findByIdAndUpdate(id, req.body, {

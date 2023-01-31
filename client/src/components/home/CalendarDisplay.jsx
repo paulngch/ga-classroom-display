@@ -5,25 +5,25 @@ import calendarDisplayLogic from "./DisplayLogic";
 
 
 export default function CalendarDisplay() {
-  const { selectedDate, setSelectedDate } = useSelectedDate();
+  const { dayHeaderRow, dateHeaderRow ,selectedDate, setSelectedDate } = useSelectedDate();
 
   console.log(calendarDisplayLogic())
 
-  //Creating array of Weekdays to display **Days to display default "7", change code if necessary
-  const dayHeaderRow = [];
-  for (let i = 0; i < 7; i++) {
-    dayHeaderRow.push(
-      DateTime.fromISO(selectedDate).plus({ days: i }).toFormat("ccc")
-    );
-  }
-  //   console.log(dayHeaderRow);
-  //Creating array of Dates to display **Days to display default "7", change code if necessary
-  const dateHeaderRow = [];
-  for (let i = 0; i < 7; i++) {
-    dateHeaderRow.push(
-      DateTime.fromISO(selectedDate).plus({ days: i }).toFormat("d LLL yyyy")
-    );
-  }
+//   //Creating array of Weekdays to display **Days to display default "7", change code if necessary
+//   const dayHeaderRow = [];
+//   for (let i = 0; i < 7; i++) {
+//     dayHeaderRow.push(
+//       DateTime.fromISO(selectedDate).plus({ days: i }).toFormat("ccc")
+//     );
+//   }
+//   //   console.log(dayHeaderRow);
+//   //Creating array of Dates to display **Days to display default "7", change code if necessary
+//   const dateHeaderRow = [];
+//   for (let i = 0; i < 7; i++) {
+//     dateHeaderRow.push(
+//       DateTime.fromISO(selectedDate).plus({ days: i }).toFormat("d LLL yyyy")
+//     );
+//   }
   //   console.log(dateHeaderRow);
 
   //   useEffect(() => {

@@ -12,9 +12,9 @@ export default function Login() {
   const [user, setUser] = UserAuth();
   const navigate = useNavigate();
 
-    useEffect(() => {
-      user.data && navigate("/");
-    }, []);
+  useEffect(() => {
+    user.data && navigate("/");
+  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -32,14 +32,18 @@ export default function Login() {
     onSubmit: async ({ email, password }) => {
       try {
         const { data: loginData } = await axios.post(
-          `${import.meta.env.VITE_BASE_URL}/auth/login`,
-        //   `/auth/login`,
+        //   `${import.meta.env.VITE_BASE_URL}/auth/login`,
+            `/auth/login`,
           {
             email,
             password,
           }
         );
         console.log(loginData);
+        // Storing JWT in local storage
+        localStorage.setItem("token", loginData.data.token);
+        console.log(loginData.data.token);
+
         if (loginData.data) {
           // Set global user state on successful login
           setUser({
@@ -50,9 +54,6 @@ export default function Login() {
             error: null,
             loading: false,
           });
-          // Storing JWT in local storage
-          localStorage.setItem("token", loginData.data.token);
-        
           // Update axios header with token
           axios.defaults.headers.common[
             "authorization"

@@ -3,27 +3,35 @@ import { useState, useEffect } from "react";
 import { useSelectedDate } from "../../context/SelectedDateContext";
 import calendarDisplayLogic from "./DisplayLogic";
 
-
 export default function CalendarDisplay() {
-  const { dayHeaderRow, dateHeaderRow ,selectedDate, setSelectedDate } = useSelectedDate();
+  const { dayHeaderRow, dateHeaderRow, selectedDate, setSelectedDate } =
+    useSelectedDate();
 
-  console.log(calendarDisplayLogic())
+  //   console.log("CALDLOGIC", calendarDisplayLogic())
+  let calDisplayLogic = calendarDisplayLogic();
 
-//   //Creating array of Weekdays to display **Days to display default "7", change code if necessary
-//   const dayHeaderRow = [];
-//   for (let i = 0; i < 7; i++) {
-//     dayHeaderRow.push(
-//       DateTime.fromISO(selectedDate).plus({ days: i }).toFormat("ccc")
-//     );
-//   }
-//   //   console.log(dayHeaderRow);
-//   //Creating array of Dates to display **Days to display default "7", change code if necessary
-//   const dateHeaderRow = [];
-//   for (let i = 0; i < 7; i++) {
-//     dateHeaderRow.push(
-//       DateTime.fromISO(selectedDate).plus({ days: i }).toFormat("d LLL yyyy")
-//     );
-//   }
+  //Classroom array for mapping Display
+  const classrooms = [];
+  for (let i = 0; i < 6; i++) {
+    classrooms.push(`${i + 1}`);
+  }
+  //   console.log(classrooms)
+
+  //   //Creating array of Weekdays to display **Days to display default "7", change code if necessary
+  //   const dayHeaderRow = [];
+  //   for (let i = 0; i < 7; i++) {
+  //     dayHeaderRow.push(
+  //       DateTime.fromISO(selectedDate).plus({ days: i }).toFormat("ccc")
+  //     );
+  //   }
+  //   //   console.log(dayHeaderRow);
+  //   //Creating array of Dates to display **Days to display default "7", change code if necessary
+  //   const dateHeaderRow = [];
+  //   for (let i = 0; i < 7; i++) {
+  //     dateHeaderRow.push(
+  //       DateTime.fromISO(selectedDate).plus({ days: i }).toFormat("d LLL yyyy")
+  //     );
+  //   }
   //   console.log(dateHeaderRow);
 
   //   useEffect(() => {
@@ -63,7 +71,7 @@ export default function CalendarDisplay() {
         <div className="mt-8 flex flex-col items-center">
           <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-              <div className="overflow-hidden max-w-[1200px] shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-300">
                   <thead className="bg-gray-50">
                     <tr className=" bg-gray-400">
@@ -85,53 +93,11 @@ export default function CalendarDisplay() {
                         <th
                           scope="col"
                           key={ele}
-                          className="bg-gray-200 py-1.5 pl-4 pr-4 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                          className=" bg-gray-200 py-1.5 pl-4 pr-4 text-center text-sm font-semibold text-gray-900 sm:pl-6"
                         >
                           {ele}
                         </th>
                       ))}
-                      {/* <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Date1
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Date2
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Date3
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Date4
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Date5
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Date6
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Date7
-                      </th> */}
                     </tr>
                     <tr className="divide-x divide-gray-200">
                       {dayHeaderRow.map((ele) => (
@@ -143,98 +109,40 @@ export default function CalendarDisplay() {
                           {ele}
                         </th>
                       ))}
-
-                      {/* <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Day1
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Day2
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Day3
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Day4
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Day5
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Day6
-                      </th>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Day7
-                      </th> */}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
-                    <tr>
+                  <tbody className="divide-y divide-x divide-gray-200 bg-white">
+                    {classrooms.map((element, index) => (
+                      <tr
+                        key={`${element}+${index}`}
+                        className="divide-x divide-gray-200"
+                      >
+                        <td className="text-left text-sm font-semibold bg-gray-200 text-gray-900 sm:pl-6">
+                          Room {element}
+                        </td>
+                        {calDisplayLogic[element - 1].map((ele, i) => (
+                          <td
+                            key={`${ele}+${i}`}
+                            className="py-3.5 pl-4 pr-4 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                          >
+                            {ele}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                    {/* <tr className="divide-x divide-gray-200">
                       <td className="text-left text-sm font-semibold bg-gray-200 text-gray-900 sm:pl-6">
                         Classroom1
                       </td>
-                      <td className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                        1
-                      </td>
-                      <td className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                        2
-                      </td>
-                      <td className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                        3
-                      </td>
-                      <td className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                        4
-                      </td>
-                      <td className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                        5
-                      </td>
-                      <td className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                        6
-                      </td>
-                      <td className="py-3.5 pl-4 pr-4 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                        7
-                      </td>
-                    </tr>
-
-                    {/* {people.map((person) => (
-                      <tr
-                        key={person.email}
-                        className="divide-x divide-gray-200"
-                      >
-                        <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                          {person.name}
+                      {calDisplayLogic[0].map((ele, i) => (
+                        <td
+                          key={`${ele}+${i}`}
+                          className="py-3.5 pl-4 pr-4 text-center text-sm font-semibold text-gray-900 sm:pl-6"
+                        >
+                          {ele}
                         </td>
-                        <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                          {person.title}
-                        </td>
-                        <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                          {person.email}
-                        </td>
-                        <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                          {person.role}
-                        </td>
-                      </tr>
-                    ))} */}
+                      ))}
+                    </tr> */}
                   </tbody>
                 </table>
               </div>

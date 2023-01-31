@@ -8,10 +8,30 @@ const calendarDisplayLogic = () => {
     dateHeaderRow,
     selectedDate,
     setSelectedDate,
-    occupiedBy,
-    numberOfClassrooms,
-    daysToShow,
+    // occupiedBy,
+    // numberOfClassrooms,
+    // daysToShow,
   } = useSelectedDate();
+
+  //============================================
+  //constant values here, (future feature), to change when needed
+  const numberOfClassrooms = 6;
+  const daysToShow = 7;
+  //============================================
+  //==========================================
+  // Logic for creating empty array (to be appended later) then mapped onto table
+  //Default is 6 classrooms, change code above if needed
+  const occupiedBy = [];
+  for (let i = 0; i < numberOfClassrooms; i++) {
+    occupiedBy.push([]);
+    for (let j = 0; j < daysToShow; j++) {
+      occupiedBy[i].push("");
+    }
+  }
+  // console.log("OCC BY", occupiedBy)
+  // occupiedBy = Array of 6 arrays(representing 6 classrooms),
+  // within each of the 6 arrays, there are 7 empty strings,
+  // (representing 7 empty days) to be filled later in logic
 
   //==========================================
   // Fetching COHORT from api and setting to state
@@ -67,7 +87,7 @@ const calendarDisplayLogic = () => {
       currDate = new Date(selectedDate);
       currDate.setDate(currDate.getDate() + j);
       currDate = new Date(currDate);
-      console.log("cDate", currDate);
+      // console.log("cDate", currDate);
       currCohortStartDate = new Date(cohortState[i].startDate);
       // console.log("CCStartDate", currCohortStartDate)
       currCohortEndDate = new Date(cohortState[i].endDate);
@@ -100,8 +120,10 @@ const calendarDisplayLogic = () => {
               occupiedBy[cohortState[i].classRoom - 1][j] !== ""
             ) {
               occupiedBy[cohortState[i].classRoom - 1][j] =
-                "*" + occupiedBy[cohortState[i].classRoom - 1][j] + "/";
-              cohortState[i].courseCode;
+                "*" +
+                occupiedBy[cohortState[i].classRoom - 1][j] +
+                "/" +
+                cohortState[i].courseCode;
             }
             break;
           //if cell === Tuesday (matching day) and currently empty (no conflict with other classes), cell = cohort/class
@@ -117,8 +139,10 @@ const calendarDisplayLogic = () => {
               occupiedBy[cohortState[i].classRoom - 1][j] !== ""
             ) {
               occupiedBy[cohortState[i].classRoom - 1][j] =
-                "*" + occupiedBy[cohortState[i].classRoom - 1][j] + "/";
-              cohortState[i].courseCode;
+                "*" +
+                occupiedBy[cohortState[i].classRoom - 1][j] +
+                "/" +
+                cohortState[i].courseCode;
             }
             break;
 
@@ -198,7 +222,7 @@ const calendarDisplayLogic = () => {
               }
             };
             findSaturdays(cohortState[i].startDate, cohortState[i].endDate);
-            console.log("SATs", saturdays);
+            // console.log("SATs", saturdays);
             //Pushing all Saturdays of current class/cohort into 2 arrays, evenSaturdays & oddSaturdays
             for (let n = 0; n < saturdays.length; n++) {
               if ((n + 1) % 2 === 0) {
@@ -293,7 +317,7 @@ const calendarDisplayLogic = () => {
     }
   }
 
-  console.log("OCCBy", occupiedBy);
-  return cohortState;
+  // console.log("OCCBy", occupiedBy);
+  return occupiedBy;
 };
 export default calendarDisplayLogic;

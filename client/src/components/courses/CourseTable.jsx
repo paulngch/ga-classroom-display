@@ -57,6 +57,8 @@ export default function CourseTable() {
       course.courseCode.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  //====================================================
+  //CHANGE HANDLE DELETE & EDIT
   const handleDelete = (id) => () => {
     fetch(`/api/cohorts/${id}`, {
       method: "DELETE",
@@ -70,7 +72,7 @@ export default function CourseTable() {
         setCourses(courses.filter((h) => h._id !== id));
       });
   };
-
+  //======================================================
   // Sorting Filtered Courses
   const handleSort = (key) => {
     setSort({ key, order: sort.order === "asc" ? "desc" : "asc" });

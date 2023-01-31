@@ -99,7 +99,7 @@ export default function CalendarDisplay() {
                         </th>
                       ))}
                     </tr>
-                    <tr className="divide-x divide-gray-200">
+                    <tr className="divide-x divide-gray-300">
                       {dayHeaderRow.map((ele) => (
                         <th
                           scope="col"
@@ -111,11 +111,11 @@ export default function CalendarDisplay() {
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-x divide-gray-200 bg-white">
+                  <tbody className="divide-y divide-x divide-gray-300 bg-white">
                     {classrooms.map((element, index) => (
                       <tr
                         key={`${element}+${index}`}
-                        className="divide-x divide-gray-200"
+                        className="divide-x divide-gray-300"
                       >
                         <td className="text-left text-sm font-semibold bg-gray-200 text-gray-900 sm:pl-6">
                           Room {element}

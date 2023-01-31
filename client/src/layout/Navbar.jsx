@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { UserAuth } from "../context/AuthContext";
 
 const navigation = [
   { name: "Dashboard", href: "/", current: false },
@@ -14,7 +15,17 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-
+  const [user, setUser] = UserAuth()
+  const handleLogout = () => {
+    // setState({ data: null, loading: false, error: null });
+    localStorage.removeItem("token");
+    setUser({
+      data: null,
+      error: null,
+      loading: false,
+    });
+    navigate("/");
+  };
 
   return (
     <Disclosure as="nav" className="bg-gray-800">
@@ -91,10 +102,25 @@ export default function Navbar() {
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       
-                      <Menu.Item>
+                    {!user.data &&(<Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href="/login"
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700"
+                            )}
+                          >
+                            Sign in
+                          </a>
+                        )}
+                      </Menu.Item>)}
+
+                      {user.data &&(<Menu.Item>
+                        {({ active }) => (
+                          <a
+                          onClick={handleLogout}
+                            // href="/"
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
@@ -103,7 +129,7 @@ export default function Navbar() {
                             Sign out
                           </a>
                         )}
-                      </Menu.Item>
+                      </Menu.Item>)}
                     </Menu.Items>
                   </Transition>
                 </Menu>

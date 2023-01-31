@@ -2,7 +2,7 @@
 require("dotenv").config();
 const path = require("path");
 const express = require("express");
-
+const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
@@ -19,8 +19,15 @@ const app = express();
 const PORT = process.env.PORT ?? 3000;
 
 //MIDDLEWARE
-app.use(express.static("../client/dist"))
+app.use(express.static("../client/dist"));
 app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-access-token"],
+  })
+);
 app.use(morgan("dev"));
 app.use("/auth", authRoutes);
 app.use("/api/bookings", bookingsController);

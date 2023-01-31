@@ -1,9 +1,13 @@
 import { DateTime } from "luxon";
 import { useState, useEffect } from "react";
 import { useSelectedDate } from "../../context/SelectedDateContext";
+import calendarDisplayLogic from "./DisplayLogic";
+
 
 export default function CalendarDisplay() {
   const { selectedDate, setSelectedDate } = useSelectedDate();
+
+  console.log(calendarDisplayLogic())
 
   //Creating array of Weekdays to display **Days to display default "7", change code if necessary
   const dayHeaderRow = [];

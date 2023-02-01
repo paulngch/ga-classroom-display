@@ -30,7 +30,8 @@ export default function BookingsTable() {
   };
   useEffect(() => {
     fetchBookings();
-  }, []);
+}, []);
+console.log(bookings)
 
 //   const handleDelete = (id) => () => {
 //     fetch(`/api/bookings/${id}`, {
@@ -227,7 +228,7 @@ export default function BookingsTable() {
                                 {booking.classRoom}
                               </td>
                               <td className="whitespace-nowrap p-4 text-sm text-gray-500">
-                                {booking.holiday}
+                                {booking.holiday? ("Yes"):("No")}
                               </td>
                               <td className="whitespace-nowrap p-4 text-sm text-gray-500">
                                 {booking.cohort}

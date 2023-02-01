@@ -8,6 +8,8 @@ import SingleCourse from "./protected/SingleCourse";
 import ProtectRoute from "./routes/ProtectRoute";
 import Bookings from "./protected/Bookings";
 import SingleBooking from "./protected/SingleBooking";
+import Display from "./pages/Display";
+import DisplayClassroom from "./components/display/DisplayClassroom";
 
 export default function App() {
   return (
@@ -18,6 +20,7 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/display" element={<Display />} />
           </Route>
 
           <Route element={<ProtectRoute />}>
@@ -28,6 +31,8 @@ export default function App() {
               <Route path="/admin/bookings/:id" element={<SingleBooking />} />
             </Route>
           </Route>
+          {/* No Navbar */}
+          <Route path="/display/:id" element={<DisplayClassroom />} />
         </Routes>
       </BrowserRouter>
     </SelectedDateProvider>

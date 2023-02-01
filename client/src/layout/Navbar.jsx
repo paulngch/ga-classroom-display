@@ -7,7 +7,7 @@ const navigation = [
   { name: "Dashboard", href: "/", current: false },
   { name: "Course", href: "/courses", current: false },
   { name: "Bookings", href: "/admin/bookings", current: false },
-  { name: "Display", href: "/", current: false },
+  { name: "Display", href: "/display", current: false },
 ];
 
 function classNames(...classes) {
@@ -103,7 +103,7 @@ export default function Navbar() {
                     )}
                     <a
                       key="display"
-                      href="/"
+                      href="/display"
                       className={classNames(
                         false
                           ? "bg-gray-900 text-white"

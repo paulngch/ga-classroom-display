@@ -15,15 +15,15 @@ export default function DisplayClassroom() {
   console.log(calDisplayLogic);
   //   }, []);
 
-  //   useEffect(() => {
-  //     const interval = setInterval(() => {
-  //       setCountdown((countdown) => countdown - 1);
-  //       if (countdown === 0) {
-  //         window.location.reload();
-  //       }
-  //     }, 1000);
-  //     return () => clearInterval(interval);
-  //   }, [countdown, calDisplayLogic]);
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setCountdown((countdown) => countdown - 1);
+        if (countdown === 0) {
+          window.location.reload();
+        }
+      }, 1000);
+      return () => clearInterval(interval);
+    }, [countdown, calDisplayLogic]);
 
   const [cohortState, setCohortState] = useState([]);
 
@@ -97,9 +97,9 @@ export default function DisplayClassroom() {
             {cohortStartTime} - {cohortEndTime}
           </p>
         )}
-        <p className="text-white text-center">
+        {/* <p className="text-white text-center">
           Placeholder: {countdown} seconds remaining until refresh.
-        </p>
+        </p> */}
         <br />
         <br />
         <a>

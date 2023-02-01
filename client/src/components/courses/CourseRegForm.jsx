@@ -44,6 +44,7 @@ export default function CourseRegForm() {
         //   `/api/cohorts`,
           values
         );
+        console.log("successfully POST")
         // navigate("/courses");
         //=====================
         //   const response = await fetch("/api/cohorts", {

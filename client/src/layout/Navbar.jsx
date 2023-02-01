@@ -6,7 +6,7 @@ import { UserAuth } from "../context/AuthContext";
 const navigation = [
   { name: "Dashboard", href: "/", current: false },
   { name: "Course", href: "/courses", current: false },
-  { name: "Bookings", href: "/", current: false },
+  { name: "Bookings", href: "/admin/bookings", current: false },
   { name: "Display", href: "/", current: false },
 ];
 
@@ -15,7 +15,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [user, setUser] = UserAuth()
+  const [user, setUser] = UserAuth();
   const handleLogout = () => {
     // setState({ data: null, loading: false, error: null });
     localStorage.removeItem("token");
@@ -59,26 +59,65 @@ export default function Navbar() {
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    <a
+                      key="dashboard"
+                      href="/"
+                      className={classNames(
+                        false
+                          ? "bg-gray-900 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                        "px-3 py-2 rounded-md text-sm font-medium"
+                      )}
+                      aria-current={false ? "page" : undefined}
+                    >
+                      Dashboard
+                    </a>
+
+                    <a
+                      key="courses"
+                      href="/courses"
+                      className={classNames(
+                        false
+                          ? "bg-gray-900 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                        "px-3 py-2 rounded-md text-sm font-medium"
+                      )}
+                      aria-current={false ? "page" : undefined}
+                    >
+                      Courses
+                    </a>
+                    {user.data && (
                       <a
-                        key={item.name}
-                        href={item.href}
+                        key="bookings"
+                        href="/admin/bookings"
                         className={classNames(
-                          item.current
+                          false
                             ? "bg-gray-900 text-white"
                             : "text-gray-300 hover:bg-gray-700 hover:text-white",
                           "px-3 py-2 rounded-md text-sm font-medium"
                         )}
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={false ? "page" : undefined}
                       >
-                        {item.name}
+                        Bookings
                       </a>
-                    ))}
+                    )}
+                    <a
+                      key="display"
+                      href="/"
+                      className={classNames(
+                        false
+                          ? "bg-gray-900 text-white"
+                          : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                        "px-3 py-2 rounded-md text-sm font-medium"
+                      )}
+                      aria-current={false ? "page" : undefined}
+                    >
+                      Display
+                    </a>
                   </div>
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
                   <div>
@@ -101,35 +140,38 @@ export default function Navbar() {
                     leaveTo="transform opacity-0 scale-95"
                   >
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                      
-                    {!user.data &&(<Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="/login"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign in
-                          </a>
-                        )}
-                      </Menu.Item>)}
+                      {!user.data && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              href="/login"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Sign in
+                            </a>
+                          )}
+                        </Menu.Item>
+                      )}
 
-                      {user.data &&(<Menu.Item>
-                        {({ active }) => (
-                          <a
-                          onClick={handleLogout}
-                            // href="/"
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}
-                          >
-                            Sign out
-                          </a>
-                        )}
-                      </Menu.Item>)}
+                      {user.data && (
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              onClick={handleLogout}
+                              // href="/"
+                              className={classNames(
+                                active ? "bg-gray-100" : "",
+                                "block px-4 py-2 text-sm text-gray-700"
+                              )}
+                            >
+                              Sign out
+                            </a>
+                          )}
+                        </Menu.Item>
+                      )}
                     </Menu.Items>
                   </Transition>
                 </Menu>
@@ -142,10 +184,8 @@ export default function Navbar() {
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  
                   as="a"
                   href={item.href}
-                  
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"

@@ -5,16 +5,6 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { DateTime } from "luxon";
 import { Link } from "react-router-dom";
 
-const people = [
-  {
-    name: "Lindsay Walton",
-    title: "Front-end Developer",
-    email: "lindsay.walton@example.com",
-    role: "Member",
-  },
-  // More people...
-];
-
 export default function CourseTable() {
   const [user, setUser] = UserAuth();
   const [courses, setCourses] = useState([]);
@@ -58,7 +48,7 @@ export default function CourseTable() {
   );
 
   //====================================================
-  //CHANGE HANDLE DELETE & EDIT
+  //HANDLE DELETE
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
@@ -71,20 +61,9 @@ export default function CourseTable() {
       }
     } catch (error) {
       console.log(error.message);
-      return setOpen(true); //open FailMsg
+      // return setOpen(true); //open FailMsg
     }
 
-    // fetch(`/api/cohorts/${id}`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   // eslint-disable-next-line
-    //   .then((data) => {
-        // setCourses(courses.filter((h) => h._id !== id));
-      // });
   };
   //======================================================
   // Sorting Filtered Courses

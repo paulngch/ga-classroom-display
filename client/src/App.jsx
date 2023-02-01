@@ -6,6 +6,8 @@ import Courses from "./pages/Courses";
 import Login from "./pages/Login";
 import SingleCourse from "./protected/SingleCourse";
 import ProtectRoute from "./routes/ProtectRoute";
+import Bookings from "./protected/Bookings";
+import SingleBooking from "./protected/SingleBooking";
 
 export default function App() {
   return (
@@ -22,6 +24,8 @@ export default function App() {
             <Route path="/admin" element={<SharedLayout />}>
               <Route index element={<Home />} />
               <Route path="/admin/course/:id" element={<SingleCourse />} />
+              <Route path="/admin/bookings/" element={<Bookings />} />
+              <Route path="/admin/bookings/:id" element={<SingleBooking />} />
             </Route>
           </Route>
         </Routes>

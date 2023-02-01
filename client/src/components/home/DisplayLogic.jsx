@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelectedDate } from "../../context/SelectedDateContext";
+import { DateTime } from "luxon";
 
 const calendarDisplayLogic = () => {
   const {
@@ -54,6 +55,25 @@ const calendarDisplayLogic = () => {
     fetchCohort();
   }, []);
 
+  const [bookingsState, setBookingsState] = useState([]);
+  const fetchBookings = async () => {
+    try {
+      const { data: response } = await axios.get(
+        `${import.meta.env.VITE_BASE_URL}/api/bookings`
+        // `/api/bookings`
+      );
+      if (response) {
+        setBookingsState(response);
+        // console.log(response);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    fetchBookings();
+  }, []);
+
   // //==========================================
   // // Logic for creating empty array (to be appended later) then mapped onto table
   // //Default is 6 classrooms, change code above if needed
@@ -68,6 +88,7 @@ const calendarDisplayLogic = () => {
   // // occupiedBy = Array of 6 arrays(representing 6 classrooms),
   // // within each of the 6 arrays, there are 7 empty strings,
   // // (representing 7 empty days) to be filled later in logic
+
 
   //=============================//
   //MAIN LOGIC FOR DISPLAY BELOW //
@@ -318,7 +339,118 @@ const calendarDisplayLogic = () => {
     }
   }
 
-  // console.log("OCCBy", occupiedBy);
+  //=============================================
+  //Logic for HOLIDAYS && Manual Bookings
+  //===================
+  //1) Find holidays, 2)Iterate through all the classrooms' occupiedBy arrays,
+  // and replace with roomUseBy if displayDate is between start and end date
+
+  //Loop through all the bookings state to scan for holidays === true
+
+  //Depending on whether it is all Classrooms affected (holiday/full-booking)
+  //or just 1 classroom (in the case of manual booking), will replace the
+  //correct cell with the the eventName/holiday
+
+  for (let i = 0; i < bookingsState.length; i++) {
+    let currDate = "";
+    let currBookingStartDate = "";
+    let currBookingEndDate = "";
+
+    currBookingStartDate = new Date(
+      DateTime.fromISO(bookingsState[i].bookingStart).toISO()
+    );
+    currBookingEndDate = new Date(
+      DateTime.fromISO(bookingsState[i].bookingEnd).toISO()
+    );
+
+    if (bookingsState[i].holiday === true) {
+      //IF holiday === true, loop through all the classRooms and through every displayed day, check whether displayDate intersects with holiday period, replace holiday's name in the cell
+      for (let j = 0; j < occupiedBy.length; j++) {
+        for (let k = 0; k < occupiedBy[j].length; k++) {
+          // currDate = new Date(selectedDateState);
+          // currDate = new Date(
+          //   DateTime.fromISO(selectedISODate).plus({ days: k }).toISO()
+          // );
+          currDate = new Date(selectedDate);
+          currDate = new Date(
+            DateTime.fromISO(selectedDate).plus({ days: k }).toISO()
+          );
+          if (
+            currBookingStartDate <= currDate &&
+            currBookingEndDate >= currDate
+          ) {
+            occupiedBy[j][k] = `H:${bookingsState[i].roomUseBy}`;
+          }
+        }
+      }
+
+      //If not holiday, but is institution-wide event (occupies null classrooms),
+      //loop through all classrooms and every day in the classroom
+    } else if (
+      bookingsState[i].holiday === false &&
+      bookingsState[i].classRoom === null
+    ) {
+      //loop through all the classrooms
+      for (let j = 0; j < occupiedBy.length; j++) {
+        //loop through the array of occupiedBy
+        for (let k = 0; k < occupiedBy[j].length; k++) {
+          currDate = new Date(selectedDate);
+          currDate = new Date(
+            DateTime.fromISO(selectedISODate).plus({ days: k }).toISO()
+          );
+          //check for whether date of booking falls withing display date and replace if YES
+          if (
+            currBookingStartDate <= currDate &&
+            currBookingEndDate >= currDate &&
+            occupiedBy[j][k].slice(0, 2) !== "H:" &&
+            occupiedBy[j][k] !== "" &&
+            occupiedBy[j][k] !== "SUN"
+          ) {
+            occupiedBy[j][k] = "*" + bookingsState[i].roomUseBy;
+          } else if (
+            currBookingStartDate <= currDate &&
+            currBookingEndDate >= currDate &&
+            occupiedBy[j][k].slice(0, 2) !== "H:"
+          ) {
+            occupiedBy[j][k] = bookingsState[i].roomUseBy;
+          }
+        }
+      }
+    } else {
+      //situation where NOT holiday && only occupy 1 classroom
+
+      //loop through the particular classroom everyday ("7" days/times) and replace if booking intersects with displayDate range (unless holiday, then remain unchanged)
+      for (
+        let m = 0;
+        m < occupiedBy[bookingsState[i].classRoom - 1].length;
+        m++
+      ) {
+        currDate = new Date(selectedDate);
+        currDate = new Date(
+          DateTime.fromISO(selectedDate).plus({ days: m }).toISO()
+        );
+        if (
+          // true
+          currBookingStartDate <= currDate &&
+          currBookingEndDate >= currDate &&
+          occupiedBy[bookingsState[i].classRoom - 1][m].slice(0, 2) !== "H:" &&
+          occupiedBy[bookingsState[i].classRoom - 1][m] !== "" &&
+          occupiedBy[bookingsState[i].classRoom - 1][m] !== "SUN"
+        ) {
+          occupiedBy[bookingsState[i].classRoom - 1][m] =
+            "*" + bookingsState[i].roomUseBy;
+        } else if (
+          currBookingStartDate <= currDate &&
+          currBookingEndDate >= currDate &&
+          occupiedBy[bookingsState[i].classRoom - 1][m].slice(0, 2) !== "H:"
+        ) {
+          occupiedBy[bookingsState[i].classRoom - 1][m] =
+            bookingsState[i].roomUseBy;
+        }
+      }
+    }
+  }
+
   return occupiedBy;
 };
 export default calendarDisplayLogic;
